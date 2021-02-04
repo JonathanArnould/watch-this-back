@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const connection = require("../config");
 
+// RECUPERE LES INFOS DE TOUT LES UTILISATEURS
+
 router.get("/", (req, res) => {
   connection.query("SELECT * from user", (err, results) => {
     if (err) {
@@ -17,6 +19,8 @@ router.get("/", (req, res) => {
     }
   });
 });
+
+// RECUPERE LES INFOS D'UN UTILISATEUR
 
 router.get("/:id", (req, res) => {
   connection.query(
@@ -37,6 +41,8 @@ router.get("/:id", (req, res) => {
     }
   );
 });
+
+// POST D'UN UTILISATEUR
 
 router.post("/", (req, res) => {
   const { user_name, user_email, user_password, user_avatar } = req.body;
@@ -64,6 +70,8 @@ router.post("/", (req, res) => {
   );
 });
 
+// MODIFICATION DES DONNEES D'UN UTILISATEUR
+
 router.put("/:id", (req, res) => {
   const updatedUser = req.body;
   const idUser = req.params.id;
@@ -89,6 +97,8 @@ router.put("/:id", (req, res) => {
     }
   );
 });
+
+// SUPPRESSION D'UN UTILISATEUR
 
 router.delete("/:id", (req, res) => {
   connection.query(
