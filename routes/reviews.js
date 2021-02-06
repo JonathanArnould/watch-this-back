@@ -3,24 +3,27 @@ const router = express.Router();
 const connection = require("../config");
 
 router.get("/", (req, res) => {
-  connection.query("SELECT * from review", (err, results) => {
-    if (err) {
-      res
-        .status(500)
-        .send("Il y a eu une erreur lors de l'extraction des données");
-    } else {
-      if (results.length === 0) {
-        res.status(404).send("Aucun film trouvé");
+  connection.query(
+    "SELECT * FROM review JOIN movie ON movie.movie_id=review_movie_id",
+    (err, results) => {
+      if (err) {
+        res
+          .status(500)
+          .send("Il y a eu une erreur lors de l'extraction des données");
       } else {
-        res.status(200).json(results);
+        if (results.length === 0) {
+          res.status(404).send("Aucun film trouvé");
+        } else {
+          res.status(200).json(results);
+        }
       }
     }
-  });
+  );
 });
 
 router.get("/:id", (req, res) => {
   connection.query(
-    "SELECT * from review WHERE review_id=?",
+    "SELECT * FROM review WHERE review_id=?",
     [req.params.id],
     (err, results) => {
       if (err) {
