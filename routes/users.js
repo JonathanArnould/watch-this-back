@@ -98,7 +98,7 @@ router.get("/:id", (req, res) => {
 
 router.get("/:id/favorites", (req, res) => {
   connection.query(
-    "SELECT * FROM review AS r JOIN favorite AS f ON r.review_id=f.favorite_review_id JOIN user AS u ON u.user_id=f.favorite_user_id WHERE u.user_id=?",
+    "SELECT * FROM review AS r LEFT JOIN favorite AS f ON r.review_id=f.favorite_review_id LEFT JOIN user AS u ON u.user_id=f.favorite_user_id WHERE u.user_id=?",
     [req.params.id],
     (err, results) => {
       if (err) {

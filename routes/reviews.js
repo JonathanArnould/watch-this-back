@@ -4,7 +4,7 @@ const connection = require("../config");
 
 router.get("/", (req, res) => {
   connection.query(
-    "SELECT * FROM review JOIN movie ON movie.movie_id=review_movie_id",
+    "SELECT * FROM review JOIN movie ON movie.movie_id=review_movie_id JOIN user ON user.user_id=review_user_id ORDER BY review_id DESC",
     (err, results) => {
       if (err) {
         res
